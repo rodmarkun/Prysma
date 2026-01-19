@@ -2,7 +2,7 @@ mod geometry;
 mod math;
 mod renderer;
 
-use geometry::cube;
+use geometry::{cube, triangle};
 use math::{Mat4, Vec4};
 use renderer::ScreenBuffer;
 use std::thread;
@@ -21,13 +21,13 @@ fn main() {
         let transform = translation * rotation;
 
         // Transform all vertices once
-        let transformed: Vec<_> = cube::VERTICES
+        let transformed: Vec<_> = triangle::VERTICES
             .iter()
             .map(|v| transform * Vec4::new(v.x, v.y, v.z, 1.0))
             .collect();
 
         // Draw edges
-        for (i, j) in cube::EDGES.iter() {
+        for (i, j) in triangle::EDGES.iter() {
             let p0 = buffer.project_to_screen(transformed[*i], fov);
             let p1 = buffer.project_to_screen(transformed[*j], fov);
 
